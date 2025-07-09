@@ -14,7 +14,6 @@ const Recommnedation = (props) => {
         "price": 0.0,
         "img_link": "",
         "trailer_link": ""
-
     }
 
     setRecommendations(movie_template) //get recommendations from api based on knn of parent movie
