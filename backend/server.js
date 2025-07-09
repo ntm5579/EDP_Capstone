@@ -13,7 +13,7 @@ const collectionName = process.env.MONGO_DB_COLLECTION;
 const app = express();
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json()); // Middleware to parse JSON bodies
-const PORT = 3000;
+const PORT = 4000;
 
 // Endpoint to read and send JSON file content
 app.get('/movies', async (req, res) => {
@@ -34,3 +34,7 @@ app.get('/movies:id', async (req, res) => { });
 app.get('/director:id/movies', async (req, res) => { });
 
 app.get('/genre:id/moives', async (req, res) => { });
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
