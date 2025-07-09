@@ -28,3 +28,9 @@ app.get('/movies', async (req, res) => {
         res.status(500).send("Hmmm, something is wrong... No movies for you! ☹");
     }
 });
+
+app.get('/movies:id', async (req, res) => { });
+
+app.get('/director:id/movies', async (req, res) => { });
+
+app.get('/genre:id/moives', async (req, res) => { });
