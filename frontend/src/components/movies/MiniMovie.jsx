@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 const Movie = (props) => {
-    const movie = props.data;
+    const movie = props.movie;
 
     const movie_template = { //how to structure a movie for the db
         "title": "",
