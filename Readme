@@ -1,0 +1,4 @@
+npm run dev
+
+Frontend: localhost:3000
+Backend: localhost:4000
