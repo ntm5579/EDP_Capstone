@@ -1,9 +1,6 @@
 import { MongoClient, ObjectId } from 'mongodb';
 
 const movie_template = { //how to structure a movie for the db
-    "_id": {
-        "$oid": ""
-    },
     "title": "",
     "director": "",
     "release_date": "Date object",
@@ -17,17 +14,11 @@ const movie_template = { //how to structure a movie for the db
 }
 
 const user_template = {
-    "_id": {
-        "$oid": ""
-    },
     "user_id": "",
     "password": ""
 }
 
 const cart_template = {
-    "_id": {
-        "$oid": ""
-    },
     "user_id": "",
     "credit_card": "",
     "address": "",
