@@ -28,7 +28,8 @@ const cart_template = {
 
 try {
     // TODO: Make a POST request to the API to add the sock
-    const response = await fetch(`${import.meta.env.VITE_SOCKS_API_URL}`, {
+
+    const response = await fetch(`${MONGO_DB_URL}`, { //url might be wrong
         method: "POST",
         headers: {
             "Content-Type": "application/json",
