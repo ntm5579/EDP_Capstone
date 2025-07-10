@@ -4,7 +4,7 @@ function MiniMovies({ movies }) {
       {movies.length > 0 ? (
         movies.map((movie) => (
           <div
-            key={movie.id}
+            key={movie._id}
             className="h-[50px]  border rounded text-center"
           >
             <h1>{movie.title}</h1>

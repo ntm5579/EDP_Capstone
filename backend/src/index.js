@@ -2,6 +2,7 @@ import express from 'express'
 import morgan from 'morgan'
 import { MongoClient, ObjectId } from 'mongodb';
 import dotenv from 'dotenv';
+import cors from 'cors'
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ async function connectToDb() {
 }
 
 // Middleware
+app.use(cors())
 app.use(express.json());
 app.use(morgan('dev'));
 
