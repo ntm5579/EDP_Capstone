@@ -1,7 +1,8 @@
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import MiniMovies from "./MiniMovie";
+import BackButton from "../other/BackButton";
 // import Recommendation from "Recommendation"
 
 const Movie = () => {
@@ -27,22 +28,6 @@ const Movie = () => {
   }, [id]);
 
   useEffect(() => {
-    const fetchDirector = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:4000/api/director/${data.director}/movies`
-        );
-        setdirectorMovies(res.data);
-      } catch (error) {
-        console.log(error);
-        setdirectorMovies(null);
-      }
-    };
-
-    fetchDirector();
-  }, [data.director]);
-
-  useEffect(() => {
     const fetchRecommendations = async () => {
       try {
         const res = await axios.get(
@@ -58,8 +43,25 @@ const Movie = () => {
     fetchRecommendations();
   }, [id]);
 
+  useEffect(() => {
+    const fetchDirector = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:4000/api/director/${data.director}/movies`
+        );
+        setdirectorMovies(res.data);
+      } catch (error) {
+        console.log(error);
+        setdirectorMovies(null);
+      }
+    };
+
+    fetchDirector();
+  }, [data.director]);
+
   return (
     <>
+      <BackButton />
       <div className="w-[1200px] min-h-[800px] border mx-auto mt-20 bg-black text-white p-8 rounded-lg shadow-lg">
         <div className="flex flex-col gap-6">
           <h1 className="text-5xl font-black text-white">{data.title}</h1>
