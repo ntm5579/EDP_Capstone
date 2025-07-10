@@ -30,7 +30,6 @@ app.get('/', (req, res) => {
 });
 
 // Endpoint to read and send JSON file content
-// Endpoint to read and send JSON file content
 app.get('/movies', async (req, res) => {
   try {
     const client = await MongoClient.connect(url);
@@ -52,7 +51,7 @@ app.get('/movies/:id', async (req, res) => {
 
     const { id } = req.params;
 
-    const movie = await collection.find({ id: parseInt(id) }).toArray();
+    const movie = await collection.find({ _id: new ObjectId(id) }).toArray();
     res.json(movie);
   } catch (err) {
     console.error("Error:", err);
