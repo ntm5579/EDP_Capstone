@@ -26,27 +26,29 @@ cart.get('/cart/:id', async (req, res) => {
     }
 });
 
-cart.post('/cart/:id', async (req, res) => {
+cart.put('/cart/:id', async (req, res) => {
     try {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
         const collection = db.collection("Order");
 
-        const { cart } = req.params;
+        const { cart } = req.body;
+        console.log(cart);
 
         /* example post request from other project
-        const { username, password } = req.body;
-            try {
-                const result = await pool.query('SELECT uid FROM users WHERE username = $1 AND password = $2', [username, password]);
-                if (result.rows.length > 0) {
-                    res.status(200).json({ uid: result.rows[0].uid });
-                } else {
-                    res.status(401).json({ message: 'Authentication failed' });
-                }
-            } catch (err) {
-                console.error(err);
-                res.status(500).json({ message: 'Internal server error' });
-            }
+        try {
+            const { id } = req.params;
+            const { email } = req.body;
+            console.log('Updating email for user with ID:', id);
+            res.status(200).send({
+                status: 'success',
+                data: email, // This URL should point to the newly created user
+                message: 'User updated successfully.'
+            });
+        } catch (err) {
+            console.error('Error:', err);
+            res.status(500).send('Hmm, something doesn\'t smell right... Error deleting sock');
+        }
         */
         res.json(cart);
     } catch (err) {
