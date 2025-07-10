@@ -1,31 +1,25 @@
 import React, { useState, useEffect, use } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import MiniMovies from "./MiniMovie";
 // import Recommendation from "Recommendation"
 
 const Movie = () => {
   const [data, setData] = useState([]);
-  const [directorMovies, setdirectorMovies] = useState([])
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [directorMovies, setdirectorMovies] = useState([]);
+  const [recommendedData, setrecommendedData] = useState([]);
   const { id } = useParams();
 
   console.log(id);
 
   useEffect(() => {
     const fetchMovie = async () => {
-      setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:4000/movies/${id}`);
-        setLoading(true);
+        const res = await axios.get(`http://localhost:4000/api/movies/${id}`);
         setData(res.data[0]);
-        setError(null);
       } catch (error) {
         console.log(error);
-        setError("Failed to fetch movie Details. Please try again!");
         setData(null);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -33,24 +27,40 @@ const Movie = () => {
   }, [id]);
 
   useEffect(() => {
-        const fetchDirector = async () => {
+    const fetchDirector = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/director/${data.director}/movies`);
-        setdirectorMovies(res.data[0]);
+        const res = await axios.get(
+          `http://localhost:4000/api/director/${data.director}/movies`
+        );
+        setdirectorMovies(res.data);
       } catch (error) {
         console.log(error);
         setdirectorMovies(null);
       }
     };
 
-    fetchDirector()
-  }, [data.director])
+    fetchDirector();
+  }, [data.director]);
 
-  console.log(data);
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:4000/api/movies/recommendations/${id}`
+        );
+        setrecommendedData(res.data);
+      } catch (error) {
+        console.log(error);
+        setrecommendedData(null);
+      }
+    };
+
+    fetchRecommendations();
+  }, [id]);
 
   return (
     <>
-      <div className="w-[800px] h-[800px] border mx-auto mt-20 bg-black text-white p-8 rounded-lg shadow-lg">
+      <div className="w-[1200px] min-h-[800px] border mx-auto mt-20 bg-black text-white p-8 rounded-lg shadow-lg">
         <div className="flex flex-col gap-6">
           <h1 className="text-5xl font-black text-white">{data.title}</h1>
           <h2 className="text-3xl font-bold text-white">{data.director}</h2>
@@ -77,7 +87,9 @@ const Movie = () => {
             <p className="text-gray-200 leading-relaxed">{data.description}</p>
           </div>
           <div className="mt-4">
-            <span className="text-[#D62828] font-bold text-xl mr-2">Price:</span>
+            <span className="text-[#D62828] font-bold text-xl mr-2">
+              Price:
+            </span>
             <span className="text-2xl">${data.price}</span>
           </div>
           <div className="mt-6">
@@ -92,11 +104,16 @@ const Movie = () => {
           </div>
         </div>
         <div>
-            Recommendations
+          <div>Recommendations</div>
+          <div>
+            <MiniMovies movies={recommendedData} />
+          </div>
         </div>
         <div>
-            Movies by {data.director}
-            <div></div>
+          <div>Movies by {data.director}</div>
+          <div>
+            <MiniMovies movies={directorMovies} />
+          </div>
         </div>
       </div>
     </>
