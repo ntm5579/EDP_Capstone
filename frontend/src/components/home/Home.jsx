@@ -34,12 +34,12 @@ function Home() {
 
   useEffect(() => {
     if (searchTerm.trim() === "") {
-      setFilteredMovies(data.slice(0, 10));
+      setFilteredMovies(data.slice(0, 8));
     } else {
       const results = data.filter((movie) =>
         movie.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setFilteredMovies(results.slice(0, 10));
+      setFilteredMovies(results.slice(0, 8));
     }
   }, [searchTerm, data]);
 
