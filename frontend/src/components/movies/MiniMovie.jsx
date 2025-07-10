@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import AddToCart from "../cart/AddToCart";
 
 function MiniMovies({ movies }) {
   return (
@@ -49,11 +50,7 @@ function MiniMovies({ movies }) {
               </div>
             </div>
           </Link>
-          <div className="px-4 pb-4">
-            <button className="w-full bg-[#D62828] hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center">
-              Buy Now!
-            </button>
-          </div>
+          <AddToCart data={movie} />
         </div>
       ))}
     </div>

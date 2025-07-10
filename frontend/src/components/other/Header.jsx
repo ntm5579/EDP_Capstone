@@ -29,7 +29,7 @@ function Header() {
                 Order
               </Link>
               <Link
-                to="/contact"
+                to="/cart"
                 className="py-4 px-2 font-semibold"
               >
                 Cart

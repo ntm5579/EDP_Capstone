@@ -4,6 +4,7 @@ import Home from "./components/home/Home";
 import Footer from "./components/other/Footer";
 import Header from "./components/other/Header";
 import Movie from "./components/movies/Movie";
+import Cart from "./components/cart/Cart";
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
           <main>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/movie/:title/:id" element={<Movie />} />
+              <Route path="/movie/:id" element={<Movie />} />
+              <Route path="/movie/title=:title" element={<Movie />} />
+              <Route path="/cart" element={<Cart />} />
             </Routes>
           </main>
           <Footer />

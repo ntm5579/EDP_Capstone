@@ -1,6 +1,7 @@
 import React, { useState, useEffect, use } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import AddToCart from "../cart/AddToCart";
 import MiniMovies from "./MiniMovie";
 // import Recommendation from "Recommendation"
 
@@ -10,7 +11,6 @@ const Movie = () => {
   const [recommendedData, setrecommendedData] = useState([]);
   const { id } = useParams();
 
-  console.log(id);
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -67,7 +67,7 @@ const Movie = () => {
           <div className="flex flex-wrap gap-4 text-lg">
             <div className="flex items-center">
               <span className="text-[#D62828] mr-2">Release Date:</span>
-              <span>{data.release_date}</span>
+              <span>{new Date(data.release_date).toLocaleDateString("en-DE")}</span>
             </div>
 
             <div className="flex items-center">
@@ -87,9 +87,8 @@ const Movie = () => {
             <p className="text-gray-200 leading-relaxed">{data.description}</p>
           </div>
           <div className="mt-4">
-            <span className="text-[#D62828] font-bold text-xl mr-2">
-              Price:
-            </span>
+            <AddToCart data={data} />
+            <span className="text-[#D62828] font-bold text-xl mr-2">Price:</span>
             <span className="text-2xl">${data.price}</span>
           </div>
           <div className="mt-6">
