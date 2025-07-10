@@ -1,10 +1,11 @@
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS 
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 
 app = Flask(__name__)
-
+CORS(app)
 # Load and preprocess data
 df = pd.read_json("../backend/movies.json")
 df['price'] = df['price'].astype(float)
