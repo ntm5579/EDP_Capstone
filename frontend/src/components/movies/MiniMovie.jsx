@@ -1,19 +1,64 @@
+import { Link } from "react-router-dom";
+
 function MiniMovies({ movies }) {
   return (
-    <div className="grid grid-cols-5 gap-4">
-      {movies.length > 0 ? (
-        movies.map((movie) => (
-          <div
-            key={movie._id}
-            className="h-[50px]  border rounded text-center"
-          >
-            <h1>{movie.title}</h1>
-            <button>Add to Cart</button>
+    <div className="grid grid-cols-4 gap-6">
+      {movies.map((movie) => (
+        <div
+          key={movie.id}
+          className="bg-gray-900 rounded-lg overflow-hidden shadow-lg border border-[#D62828]"
+        >
+          {/* Movie poster - assuming movie has a poster property */}
+          <Link to={`/movie/${movie.title}/${movie._id}`}>
+            <div className="h-64 bg-[#003049] relative overflow-hidden">
+              {movie.img_link2 ? (
+                <img
+                  src={
+                    movie.img_link ||
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhiDvETaJwvxVlxDXvo1lQLrYxg3MAny_O_A&s"
+                  }
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#D62828] to-black">
+                  <span className="text-2xl font-bold text-white">
+                    {movie.title.charAt(0)}
+                  </span>
+                </div>
+              )}
+              <div className="absolute top-2 right-2 bg-[#D62828] text-white text-sm font-bold px-2 py-1 rounded">
+                {movie.average_rating || "N/A"}
+              </div>
+            </div>
+
+            {/* Movie info */}
+            <div className="p-4">
+              <h3 className="text-xl font-bold text-white truncate">
+                {movie.title}
+              </h3>
+              <p className="text-gray-400 text-sm">
+                {movie.release_date || "Unknown year"}
+              </p>
+
+              <div className="mt-2 flex items-center">
+                <div className="flex items-center">
+                  <span className="ml-1 text-white">${movie.price || "?"}</span>
+                </div>
+                <span className="mx-2 text-gray-600">•</span>
+                <span className="text-gray-400 text-sm">
+                  {movie.genre || "Unknown genre"}
+                </span>
+              </div>
+            </div>
+          </Link>
+          {/* Action button */}
+          <div className="px-4 pb-4">
+            <button className="w-full bg-[#D62828] hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center">
+              Buy Now!
+            </button>
           </div>
-        ))
-      ) : (
-        <p className="col-span-5">No Movies found</p>
-      )}
+        </div>
+      ))}
     </div>
   );
 }
