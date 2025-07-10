@@ -6,6 +6,7 @@ import cors from 'cors'
 import movies from "./movies/movies.js";
 import directors from "./directors/directors.js";
 import genres from "./genres/genres.js";
+import cart from "./cart/cart.js";
 
 
 dotenv.config();
@@ -22,10 +23,10 @@ const collectionName = process.env.MONGO_DB_COLLECTION;
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
-app.use("/", movies)
-app.use("/", genres)
-app.use("/", directors)
-
+app.use("/api", movies)
+app.use("/api", genres)
+app.use("/api", directors)
+app.use("/api", cart)
 
 // Start server
 app.listen(PORT, () => {
