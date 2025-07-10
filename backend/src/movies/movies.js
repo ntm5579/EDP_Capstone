@@ -10,7 +10,7 @@ const dbName = process.env.MONGO_DB;
 const collectionName = process.env.MONGO_DB_COLLECTION;
 
 // Endpoint to read and send JSON file content
-app.get('/movies', async (req, res) => {
+movies.get('/movies', async (req, res) => {
     try {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
@@ -23,7 +23,7 @@ app.get('/movies', async (req, res) => {
     }
 });
 
-app.get('/movies/:id', async (req, res) => {
+movies.get('/movies/:id', async (req, res) => {
     try {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
@@ -38,3 +38,5 @@ app.get('/movies/:id', async (req, res) => {
         res.status(500).send("Hmmm, something is wrong... No movies for you! ☹");
     }
 });
+
+export default movies;
