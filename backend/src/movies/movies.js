@@ -87,7 +87,7 @@ movies.get("/movies/recommendations/:id", async (req, res) => {
     }
 
     const matchedMovies = await collection
-      .find({ title: { $in: resdata } }).limit(5)
+      .find({ title: { $in: resdata } }).limit(4)
       .toArray();
     res.json(matchedMovies);
   } catch (err) {
