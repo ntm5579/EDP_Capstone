@@ -15,11 +15,15 @@ genre_dummies = pd.get_dummies(df_exploded['genre'])
 features = pd.concat([df_exploded[['original_index', 'price', 'average_rating']], genre_dummies], axis=1)
 df_encoded = features.groupby('original_index').sum()
 
-# Training the model
+# Train the model
 model = NearestNeighbors(n_neighbors=6, algorithm='auto')
 model.fit(df_encoded)
 
-@app.route('/recommend', methods=['POST'])
+@app.route("/")
+def home():
+    return "Recommender API is running"
+
+@app.route("/recommend", methods=["POST"])
 def recommend():
     data = request.get_json()
     input_title = data.get("title", "")
