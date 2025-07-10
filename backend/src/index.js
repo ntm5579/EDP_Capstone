@@ -7,6 +7,7 @@ import movies from "./movies/movies.js";
 import directors from "./directors/directors.js";
 import genres from "./genres/genres.js";
 
+
 dotenv.config();
 
 
@@ -18,7 +19,6 @@ const dbName = process.env.MONGO_DB;
 const collectionName = process.env.MONGO_DB_COLLECTION;
 
 // Middleware
-
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
