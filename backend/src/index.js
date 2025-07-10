@@ -6,6 +6,7 @@ import cors from 'cors'
 import movies from "./movies/movies.js";
 import directors from "./directors/directors.js";
 import genres from "./genres/genres.js";
+import cart from "./cart/cart.js";
 
 
 dotenv.config();
@@ -25,7 +26,7 @@ app.use(morgan('dev'));
 app.use("/", movies)
 app.use("/", genres)
 app.use("/", directors)
-
+app.use("/", cart)
 
 // Start server
 app.listen(PORT, () => {
