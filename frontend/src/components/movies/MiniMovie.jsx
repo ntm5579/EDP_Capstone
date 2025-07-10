@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
+import AddToCart from "../cart/AddToCart";
 
 function MiniMovies({ movies }) {
   return (
     <div className="grid grid-cols-4 gap-6">
       {movies.map((movie) => (
         <div
-          key={movie.id}
+          key={movie._id}
           className="bg-gray-900 rounded-lg overflow-hidden shadow-lg border border-[#D62828]"
         >
           {/* Movie poster - assuming movie has a poster property */}
-          <Link to={`/movie/${movie.title}/${movie._id}`}>
+          <Link to={`/movie/${movie._id}`}>
             <div className="h-64 bg-[#003049] relative overflow-hidden">
               {movie.img_link2 ? (
                 <img
@@ -51,12 +52,7 @@ function MiniMovies({ movies }) {
               </div>
             </div>
           </Link>
-          {/* Action button */}
-          <div className="px-4 pb-4">
-            <button className="w-full bg-[#D62828] hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center">
-              Buy Now!
-            </button>
-          </div>
+          <AddToCart data={movie} />
         </div>
       ))}
     </div>

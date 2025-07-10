@@ -1,6 +1,7 @@
 import React, { useState, useEffect, use } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import AddToCart from "../cart/AddToCart";
 // import Recommendation from "Recommendation"
 
 const Movie = () => {
@@ -10,13 +11,12 @@ const Movie = () => {
   const [error, setError] = useState(null);
   const { id } = useParams();
 
-  console.log(id);
 
   useEffect(() => {
     const fetchMovie = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:4000/movies/${id}`);
+        const res = await axios.get(`http://localhost:4000/api/movies/${id}`);
         setLoading(true);
         setData(res.data[0]);
         setError(null);
@@ -33,9 +33,9 @@ const Movie = () => {
   }, [id]);
 
   useEffect(() => {
-        const fetchDirector = async () => {
+    const fetchDirector = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/director/${data.director}/movies`);
+        const res = await axios.get(`http://localhost:4000/api/director/${data.director}/movies`);
         setdirectorMovies(res.data[0]);
       } catch (error) {
         console.log(error);
@@ -46,7 +46,6 @@ const Movie = () => {
     fetchDirector()
   }, [data.director])
 
-  console.log(data);
 
   return (
     <>
@@ -57,7 +56,7 @@ const Movie = () => {
           <div className="flex flex-wrap gap-4 text-lg">
             <div className="flex items-center">
               <span className="text-[#D62828] mr-2">Release Date:</span>
-              <span>{data.release_date}</span>
+              <span>{new Date(data.release_date).toLocaleDateString("en-DE")}</span>
             </div>
 
             <div className="flex items-center">
@@ -77,6 +76,7 @@ const Movie = () => {
             <p className="text-gray-200 leading-relaxed">{data.description}</p>
           </div>
           <div className="mt-4">
+            <AddToCart data={data} />
             <span className="text-[#D62828] font-bold text-xl mr-2">Price:</span>
             <span className="text-2xl">${data.price}</span>
           </div>
@@ -92,11 +92,11 @@ const Movie = () => {
           </div>
         </div>
         <div>
-            Recommendations
+          Recommendations
         </div>
         <div>
-            Movies by {data.director}
-            <div></div>
+          Movies by {data.director}
+          <div></div>
         </div>
       </div>
     </>
