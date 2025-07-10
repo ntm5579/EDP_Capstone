@@ -15,7 +15,7 @@ function Home() {
       setLoading(true);
 
       try {
-        const res = await axios.get("http://localhost:4000/movies");
+        const res = await axios.get("http://localhost:4000/api/movies");
         setData(res.data);
         setFilteredMovies(res.data.slice(0, 10));
         setError(null);
