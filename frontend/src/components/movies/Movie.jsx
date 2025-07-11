@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import AddToCart from "../cart/AddToCart";
 import MiniMovies from "./MiniMovie";
@@ -11,7 +12,6 @@ const Movie = () => {
   const [directorMovies, setdirectorMovies] = useState([]);
   const [recommendedData, setrecommendedData] = useState([]);
   const { id } = useParams();
-
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -61,28 +61,41 @@ const Movie = () => {
 
   return (
     <>
-      <BackButton />
-      <div className="w-[1200px] min-h-[800px] border mx-auto mt-20 bg-black text-white p-8 rounded-lg shadow-lg">
+      <div className="w-[1200px] border mx-auto mt-20 bg-black text-white p-8 rounded-lg">
+        <div className="mb-4">
+          <BackButton />
+        </div>
         <div className="flex flex-col gap-6">
           <h1 className="text-5xl font-black text-white">{data.title}</h1>
           <h2 className="text-3xl font-bold text-white">{data.director}</h2>
           <div className="flex flex-wrap gap-4 text-lg">
-            <div className="flex items-center">
+            <div className="flex font-semibold items-center">
               <span className="text-[#D62828] mr-2">Release Date:</span>
-              <span>{new Date(data.release_date).toLocaleDateString("en-DE")}</span>
+              <span>{new Date(data.release_date).getFullYear("en-DE")}</span>
             </div>
 
-            <div className="flex items-center">
+            <div className="flex font-semibold items-center">
               <span className="text-[#D62828] mr-2">Genre:</span>
-              <span>{data.genre}</span>
+              <span>
+                {data.genre && data.genre.length > 0
+                  ? data.genre.map((genre, index) => (
+                      <span key={genre}>
+                        <Link className="underline" to={`/genre/${genre}`}>
+                          {genre}
+                        </Link>
+                        {index < data.genre.length - 1 && ", "}
+                      </span>
+                    ))
+                  : "Unknown genre"}
+              </span>
             </div>
 
-            <div className="flex items-center">
+            <div className="flex font-semibold items-center">
               <span className="text-[#D62828] mr-2">Rating:</span>
               <span>{data.average_rating}/10</span>
             </div>
           </div>
-          <div className="mt-4">
+          <div className="mt-4 font-semibold">
             <h3 className="text-xl font-semibold text-[#D62828] mb-2">
               Description
             </h3>
@@ -90,7 +103,9 @@ const Movie = () => {
           </div>
           <div className="mt-4">
             <AddToCart data={data} />
-            <span className="text-[#D62828] font-bold text-xl mr-2">Price:</span>
+            <span className="text-[#D62828] font-bold text-xl mr-2">
+              Price:
+            </span>
             <span className="text-2xl">${data.price}</span>
           </div>
           <div className="mt-6">
@@ -104,17 +119,17 @@ const Movie = () => {
             </a>
           </div>
         </div>
+      </div>
+      <div className="w-[1200px] border mx-auto mt-5 bg-black text-white p-8 rounded-lg">
+        <h1 className="text-3xl font-bold text-white mb-7 w-fit ">Similar Movies to {data.title}</h1>
         <div>
-          <div>Recommendations</div>
-          <div>
-            <MiniMovies movies={recommendedData} />
-          </div>
+          <MiniMovies movies={recommendedData} />
         </div>
+      </div>
+      <div className="w-[1200px] border mx-auto mt-5 bg-black text-white p-8 rounded-lg">
+        <h1 className="text-3xl font-bold text-white mb-7 w-fit ">Movies by {data.director}</h1>
         <div>
-          <div>Movies by {data.director}</div>
-          <div>
-            <MiniMovies movies={directorMovies} />
-          </div>
+          <MiniMovies movies={directorMovies} />
         </div>
       </div>
     </>

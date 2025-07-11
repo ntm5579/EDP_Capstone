@@ -23,7 +23,7 @@ function Header() {
                 Home
               </Link>
               <Link
-                to="/about"
+                to="/orders"
                 className="py-4 px-2 font-semibold"
               >
                 Order
