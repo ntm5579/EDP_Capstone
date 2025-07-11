@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import AddToCart from "../cart/AddToCart";
+import { Star } from 'lucide-react';
 
 //use state for movies in cart
 
@@ -10,18 +11,22 @@ const MiniMovies = (props) => {
       {movies.map((movie) => (
         <div
           key={movie._id}
-          className="bg-gray-900 rounded-lg overflow-hidden shadow-lg border border-[#D62828]"
+          className="bg-gray-900 transform transition-all duration-300 hover:scale-105 hover:translate-y-1 hover:shadow-lg rounded-lg overflow-hidden shadow-lg border border-[#D62828]"
         >
           <Link to={`/movie/${movie.title}/${movie._id}`}>
             <div className="h-64 bg-[#003049] relative overflow-hidden">
-              {movie.img_link2 ? (
-                <img
+              {movie.img_link ? (
+                <div> 
+                  <img
                   src={
                     movie.img_link ||
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhiDvETaJwvxVlxDXvo1lQLrYxg3MAny_O_A&s"
                   }
                   className="w-full h-full object-cover"
                 />
+                <div class="absolute inset-0 bg-black opacity-20"></div>
+                </div>
+               
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#D62828] to-black">
                   <span className="text-2xl font-bold text-white">
@@ -30,7 +35,7 @@ const MiniMovies = (props) => {
                 </div>
               )}
               <div className="absolute top-2 right-2 bg-[#D62828] text-white text-sm font-bold px-2 py-1 rounded">
-                {movie.average_rating || "N/A"}
+                    <span className="flex items-center">{movie.average_rating || "N/A"} <Star fill="white" size={10} /></span>
               </div>
             </div>
 
@@ -44,7 +49,7 @@ const MiniMovies = (props) => {
 
               <div className="mt-2 flex items-center">
                 <div className="flex items-center">
-                  <span className="ml-1 text-white">${movie.price || "?"}</span>
+                  <span className="ml-1 text-white">${movie.price.toFixed(2) || "?"}</span>
                 </div>
                 <span className="mx-2 text-gray-600">•</span>
                 <span className="text-gray-400 text-sm">

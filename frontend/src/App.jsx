@@ -10,20 +10,23 @@ import OrderHistory from "./components/order/OrderHistory";
 
 function App() {
   return (
-    <div className="min-h-screen bg-white text-black font-sans">
-      <Router>
-        <Header />
-        <main className="max-w-7xl mx-auto px-4 py-6">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/movie/:id" element={<Movie />} />
-            <Route path="/movie/title=:title" element={<Movie />} />
-            <Route path="/cart" element={<Cart />} />
-          </Routes>
-        </main>
-        <Footer />
-      </Router>
-    </div>
+    <>
+      <div className="min-h-screen text-black">
+        <Router>
+          <Header />
+          <main className="mx-auto container">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/movie/:title/:id" element={<Movie />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/genre/:genre" element={<Genre />} />
+              <Route path="/orders" element={<OrderHistory />}/>
+            </Routes>
+          </main>
+          <Footer />
+        </Router>
+      </div>
+    </>
   );
 }
 

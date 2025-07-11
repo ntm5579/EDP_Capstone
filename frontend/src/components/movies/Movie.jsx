@@ -65,73 +65,107 @@ const Movie = () => {
         <div className="mb-4">
           <BackButton />
         </div>
-        <div className="flex flex-col gap-6">
-          <h1 className="text-5xl font-black text-white">{data.title}</h1>
-          <h2 className="text-3xl font-bold text-white">{data.director}</h2>
-          <div className="flex flex-wrap gap-4 text-lg">
-            <div className="flex font-semibold items-center">
-              <span className="text-[#D62828] mr-2">Release Date:</span>
-              <span>{new Date(data.release_date).getFullYear("en-DE")}</span>
-            </div>
+        <div className="flex flex-row ">
+          <div className="gap-6 w-[65%] flex flex-col">
+            <h1 className="text-5xl font-black text-white">{data.title}</h1>
+            <h2 className="text-3xl font-bold text-white">{data.director}</h2>
+            <div className="flex flex-wrap gap-4 text-lg">
+              <div className="flex font-semibold items-center">
+                <span className="text-[#D62828] mr-2">Release Date:</span>
+                <span>{new Date(data.release_date).getFullYear("en-DE")}</span>
+              </div>
 
-            <div className="flex font-semibold items-center">
-              <span className="text-[#D62828] mr-2">Genre:</span>
-              <span>
-                {data.genre && data.genre.length > 0
-                  ? data.genre.map((genre, index) => (
-                      <span key={genre}>
-                        <Link className="underline" to={`/genre/${genre}`}>
-                          {genre}
-                        </Link>
-                        {index < data.genre.length - 1 && ", "}
-                      </span>
-                    ))
-                  : "Unknown genre"}
+              <div className="flex font-semibold items-center">
+                <span className="text-[#D62828] mr-2">Genre:</span>
+                <span>
+                  {data.genre && data.genre.length > 0
+                    ? data.genre.map((genre, index) => (
+                        <span key={genre}>
+                          <Link className="underline" to={`/genre/${genre}`}>
+                            {genre}
+                          </Link>
+                          {index < data.genre.length - 1 && ", "}
+                        </span>
+                      ))
+                    : "Unknown genre"}
+                </span>
+              </div>
+
+              <div className="flex font-semibold items-center">
+                <span className="text-[#D62828] mr-2">Rating:</span>
+                <span>{data.average_rating}/10</span>
+              </div>
+            </div>
+            <div className="mt-4 font-semibold">
+              <h3 className="text-lg font-semibold text-[#D62828] mb-2">
+                Description
+              </h3>
+              <p className="text-gray-200 leading-relaxed">
+                {data.description}
+              </p>
+            </div>
+            <div className="mt-4">
+              <span className="text-[#D62828] font-bold text-lg mr-2">
+                Price:
               </span>
+              <span className="text-lg">${data.price?.toFixed(2)}</span>
             </div>
+            <div className="mt-3 flex">
+              <div>
+                <Link
+                  href={data.trailer_link}
+                  className="w-fit bg-[#D62828] hover:cursor-pointer hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Watch Trailer
+                </Link>
+              </div>
+              <AddToCart button="Add" data={data} />
+            </div>
+          </div>
+          <div className="w-[50%]">
+                  <img
+                  src={
+                    data.img_link
+                  }
+                  className="w-full h-[600px] object-contain "
+                />
+          </div>
+        </div>
+      </div>
 
-            <div className="flex font-semibold items-center">
-              <span className="text-[#D62828] mr-2">Rating:</span>
-              <span>{data.average_rating}/10</span>
-            </div>
-          </div>
-          <div className="mt-4 font-semibold">
-            <h3 className="text-xl font-semibold text-[#D62828] mb-2">
-              Description
-            </h3>
-            <p className="text-gray-200 leading-relaxed">{data.description}</p>
-          </div>
-          <div className="mt-4">
-            <AddToCart data={data} />
-            <span className="text-[#D62828] font-bold text-xl mr-2">
-              Price:
-            </span>
-            <span className="text-2xl">${data.price}</span>
-          </div>
-          <div className="mt-6">
-            <a
-              href={data.trailer_link}
-              className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Watch Trailer
-            </a>
+      {recommendedData && recommendedData.length > 0 && (
+        <div className="w-[1200px] border mx-auto mt-5 bg-black text-white p-8 rounded-lg">
+          <h1 className="text-3xl font-bold text-white mb-7 w-fit ">
+            Similar Movies to {data.title}
+          </h1>
+          <div>
+            <MiniMovies
+              button="Add"
+              movies={recommendedData.filter(
+                (movie) => movie.title !== data.title
+              )}
+            />
           </div>
         </div>
-      </div>
-      <div className="w-[1200px] border mx-auto mt-5 bg-black text-white p-8 rounded-lg">
-        <h1 className="text-3xl font-bold text-white mb-7 w-fit ">Similar Movies to {data.title}</h1>
-        <div>
-          <MiniMovies movies={recommendedData} />
+      )}
+
+      {directorMovies && directorMovies.length > 0 && (
+        <div className="w-[1200px] border mx-auto mt-5 bg-black text-white p-8 rounded-lg">
+          <h1 className="text-3xl font-bold text-white mb-7 w-fit ">
+            Movies by {data.director}
+          </h1>
+          <div>
+            <MiniMovies
+              button="Add"
+              movies={directorMovies.filter(
+                (movie) => movie.title !== data.title
+              )}
+            />
+          </div>
         </div>
-      </div>
-      <div className="w-[1200px] border mx-auto mt-5 bg-black text-white p-8 rounded-lg">
-        <h1 className="text-3xl font-bold text-white mb-7 w-fit ">Movies by {data.director}</h1>
-        <div>
-          <MiniMovies movies={directorMovies} />
-        </div>
-      </div>
+      )}
     </>
   );
 };

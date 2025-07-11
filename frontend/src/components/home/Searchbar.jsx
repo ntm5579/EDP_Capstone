@@ -14,6 +14,7 @@ function Searchbar({ genre, searchTerm, onSearch }) {
         type="text"
         className="w-[90%] max-w-xl text-black text-lg placeholder-gray-500 border border-gray-300 bg-white p-3 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-400"
         placeholder="Search by... Title, Genre, or Director"
+
         value={searchTerm}
         onChange={(e) => onSearch(e.target.value)}
       />
