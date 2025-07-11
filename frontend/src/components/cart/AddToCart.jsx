@@ -3,11 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 async function submit(movie) {
-    console.log(movie);
-    //send api request to put in mongo
-
     try {
-        const res = await axios.get(`http://localhost:4000/api/cart/${movie._id}`);
+        const res = await axios.post(`http://localhost:4000/api/cart/${movie._id}`);
 
     } catch (error) {
         console.log(error);

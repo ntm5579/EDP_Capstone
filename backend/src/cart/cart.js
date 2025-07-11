@@ -44,28 +44,26 @@ cart.post('/cart/:movie_id', async (req, res) => {
         console.log(`Adding movie with id ${movie_id}to cart:`);
         const carts = await collection.find({ 'ordered': false }).toArray();
         if (carts.length === 0) {
-            cart = {
-                "id": "test",
-                "movies": movie_id,
+            const cart = {
+                "movies": [movie_id],
                 "last_update": new Date(),
                 "ordered": false
             }
+            const result = await collection.insertOne(cart);
+            res.status(201).send(`{"_id":"${result.insertedId}"}`);
             //insert database
         }
-        else if (carts.length === 1) {
-            const cart = carts;
-            //insert movie_id to movies array
-            //update the last_update time
-        }
         else {
-            //insert into cart movie array
-            //update the last_update time
+            const cart = carts[0]; //set this to a new cart
+            cart.movies.push(movie_id);
+            await collection.updateOne(
+                { "_id": cart._id },
+                {
+                    $set: { 'last_update': new Date(), movies: cart.movies },
+                }
+            );
+            res.status(201).send(`{"_id":"${cart._id}"}`);
         }
-
-
-        const result = await collection.insertOne(movie_id);
-        console.log(resulut.insertedId);
-        res.status(201).send(`{"movie_id":"${result.insertedId}"}`);
     } catch (err) {
         console.error("Error:", err);
         res.status(500).send("Hmmm, something is wrong... No movies for you! ☹");
