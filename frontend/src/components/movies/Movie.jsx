@@ -79,13 +79,13 @@ const Movie = () => {
               <span>
                 {data.genre && data.genre.length > 0
                   ? data.genre.map((genre, index) => (
-                      <span key={genre}>
-                        <Link className="underline" to={`/genre/${genre}`}>
-                          {genre}
-                        </Link>
-                        {index < data.genre.length - 1 && ", "}
-                      </span>
-                    ))
+                    <span key={genre}>
+                      <Link className="underline" to={`/genre/${genre}`}>
+                        {genre}
+                      </Link>
+                      {index < data.genre.length - 1 && ", "}
+                    </span>
+                  ))
                   : "Unknown genre"}
               </span>
             </div>
@@ -102,7 +102,7 @@ const Movie = () => {
             <p className="text-gray-200 leading-relaxed">{data.description}</p>
           </div>
           <div className="mt-4">
-            <AddToCart data={data} />
+            <AddToCart button="Add" data={data} />
             <span className="text-[#D62828] font-bold text-xl mr-2">
               Price:
             </span>
@@ -120,13 +120,14 @@ const Movie = () => {
           </div>
         </div>
       </div>
+
       {recommendedData && recommendedData.length > 0 && (
         <div className="w-[1200px] border mx-auto mt-5 bg-black text-white p-8 rounded-lg">
           <h1 className="text-3xl font-bold text-white mb-7 w-fit ">
             Similar Movies to {data.title}
           </h1>
           <div>
-            <MiniMovies movies={recommendedData.filter(movie => movie.title !== data.title)} />
+            <MiniMovies button="Add" movies={recommendedData.filter(movie => movie.title !== data.title)} />
           </div>
         </div>
       )}
@@ -137,8 +138,9 @@ const Movie = () => {
             Movies by {data.director}
           </h1>
           <div>
-            <MiniMovies movies={directorMovies.filter(movie => movie.title !== data.title)} />
+            <MiniMoviesbutton="Add"  movies={directorMovies.filter(movie => movie.title !== data.title)} />
           </div>
+
         </div>
       )}
     </>
