@@ -3,8 +3,6 @@ import axios from "axios";
 import MiniMovies from "../movies/MiniMovie";
 import BackButton from "../other/BackButton";
 
-import MiniMovies from "../movies/MiniMovie";
-
 function OrderHistory() {
   const [data, setData] = useState([]);
   console.log(data);
