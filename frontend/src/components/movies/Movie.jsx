@@ -138,7 +138,7 @@ const Movie = () => {
             Movies by {data.director}
           </h1>
           <div>
-            <MiniMoviesbutton="Add"  movies={directorMovies.filter(movie => movie.title !== data.title)} />
+            <MiniMovies button="Add"  movies={directorMovies.filter(movie => movie.title !== data.title)} />
           </div>
 
         </div>
