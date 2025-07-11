@@ -8,7 +8,7 @@ function BackButton() {
   };
 
   return (
-    <button className="w-[100px] h-[90px] rounded-lg bg-black hover:bg-white text-white hover:text-black" onClick={goBack}>Go Back</button>
+    <button className="border px-2 py-1.5 rounded-lg bg-[#D62828] text-white hover:bg-red-800 cursor-pointer font-bold" onClick={goBack}>Go Back</button>
   );
 }
 

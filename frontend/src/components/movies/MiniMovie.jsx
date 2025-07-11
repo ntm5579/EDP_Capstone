@@ -39,7 +39,7 @@ const MiniMovies = (props) => {
                 {movie.title}
               </h3>
               <p className="text-gray-400 text-sm">
-                {movie.release_date || "Unknown year"}
+                {new Date(movie.release_date).getFullYear("en-DE")}
               </p>
 
               <div className="mt-2 flex items-center">
@@ -48,7 +48,14 @@ const MiniMovies = (props) => {
                 </div>
                 <span className="mx-2 text-gray-600">•</span>
                 <span className="text-gray-400 text-sm">
-                  {movie.genre || "Unknown genre"}
+                  {movie.genre && movie.genre.length > 0
+                    ? movie.genre.map((genre, index) => (
+                        <span key={genre}>
+                          <Link className="underline" to={`/genre/${genre}`}>{genre}</Link>
+                          {index < movie.genre.length - 1 && ", "}
+                        </span>
+                      ))
+                    : "Unknown genre"}
                 </span>
               </div>
             </div>
