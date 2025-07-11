@@ -2,6 +2,7 @@ import MiniMovies from "../movies/MiniMovie";
 import Searchbar from "./Searchbar";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import logo from "../../assets/logo.jpg"
 
 function Home() {
   const [data, setData] = useState([]);
@@ -90,11 +91,14 @@ function Home() {
     <>
       <h1></h1>
       <section className="h-fit">
-        <div className="mx-auto mt-10 w-fit">
-          <h1 className="text-3xl font-bold underline decoration-[#D62828] text-black">
-            Logo
-          </h1>
-        </div>
+      <div className="mx-auto mt-10 w-fit">
+        <img
+          src={logo}
+          alt="TrioVision Logo"
+          className="h-40 w-auto object-contain rounded-md shadow-md"
+        />
+      </div>
+
         <Searchbar genre={allGenres} searchTerm={searchTerm} onSearch={setSearchTerm} />
         
         {loading && (
