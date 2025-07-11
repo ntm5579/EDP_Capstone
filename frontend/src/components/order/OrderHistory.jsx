@@ -1,7 +1,7 @@
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import MiniMovies from "../movies/MiniMovie";
 import BackButton from "../other/BackButton";
-import Order from "./Order";
 
 function OrderHistory() {
   const [data, setData] = useState([]);
@@ -27,8 +27,18 @@ function OrderHistory() {
         </div>
         <div>View Orders</div>
 
-        {data.map((data) => <MiniMovie movies={data} />)
-        }
+        {data.map((cart, i) => (
+          <div key={i}>
+            <div>Order Id: {cart._id}</div>
+            <div>
+              {cart.matchedMovies && cart.matchedMovies.length > 0 ? (
+                <MiniMovies movies={cart.matchedMovies} />
+              ) : (
+                <p>No matched movies for this order.</p>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );
