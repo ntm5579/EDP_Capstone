@@ -42,21 +42,36 @@ cart.get("/cart", async (req, res) => {
   }
 });
 
+cart.get("/orders", async (req, res) => {
+  try {
+    const client = await MongoClient.connect(url);
+    const db = client.db(dbName);
+    const collection = db.collection("Order");
 
-cart.get('/orders', async (req, res) => {
-    try {
-        const client = await MongoClient.connect(url);
-        const db = client.db(dbName);
-        const collection = db.collection("Order");
+    const carts = await collection.find({ ordered: true }).toArray();
 
-        const carts = await collection.find({ 'ordered': true }).toArray();
-        res.json(carts);
+    const cartsWithMatchedMovies = await Promise.all(
+      carts.map(async (cart) => {
+        const idsOfMovies = cart.movies.map((movieId) => new ObjectId(movieId));
 
-    }
-    catch (error) {
-        console.log(error);
-        res.status(500).send('Hmm, something doesn\'t seem right... cant get your movie from cart');
-    }
+        const movieCollection = db.collection("Movie");
+        const matchedMovies = await movieCollection
+          .find({ _id: { $in: idsOfMovies } })
+          .toArray();
+
+        return { ...cart, matchedMovies };
+      })
+    );
+
+    res.json(cartsWithMatchedMovies);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .send(
+        "Hmm, something doesn't seem right... cant get your movie from cart"
+      );
+  }
 });
 
 cart.post("/order", async (req, res) => {
@@ -82,7 +97,11 @@ cart.post("/order", async (req, res) => {
     await collection.updateOne(
       { _id: cart._id },
       {
-        $set: { last_update: new Date(), ordered: true, 'order_details': orderDetails },
+        $set: {
+          last_update: new Date(),
+          ordered: true,
+          order_details: orderDetails,
+        },
       }
     );
     res.status(200).send(`{"_id":"${cart._id}"}`);

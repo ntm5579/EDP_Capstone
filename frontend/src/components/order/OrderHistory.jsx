@@ -1,7 +1,8 @@
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import MiniMovies from "../movies/MiniMovie";
 import BackButton from "../other/BackButton";
-import Order from "./Order";
+
 import MiniMovies from "../movies/MiniMovie";
 
 function OrderHistory() {
@@ -28,8 +29,19 @@ function OrderHistory() {
         </div>
         <div>View Orders</div>
 
-        {data.map((data) => <MiniMovies movies={data} />)
-        }
+
+        {data.map((cart, i) => (
+          <div key={i}>
+            <div>Order Id: {cart._id}</div>
+            <div>
+              {cart.matchedMovies && cart.matchedMovies.length > 0 ? (
+                <MiniMovies movies={cart.matchedMovies} />
+              ) : (
+                <p>No matched movies for this order.</p>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );
