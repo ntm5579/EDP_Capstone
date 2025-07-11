@@ -7,10 +7,11 @@ const Cart = () => {
     const [data, setData] = useState([]);
     useEffect(() => {
         const fetchCart = async () => {
-
             try {
                 const res = await axios.get("http://localhost:4000/api/cart");
                 setData(res.data);
+                console.log(res.data);
+                console.log(data);
                 //map movie_ids and do api request for all
             } catch (error) {
                 console.log(error);

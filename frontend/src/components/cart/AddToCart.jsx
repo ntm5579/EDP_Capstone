@@ -3,18 +3,17 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 async function submit(movie, button) {
-    try {
-        if (button === "Add") {
-            const res = await axios.post(`http://localhost:4000/api/cart/${movie._id}`);
-        }
-        else {
-            const res = await axios.post(`http://localhost:4000/api/cart/remove/${movie._id}`);
-
-        }
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('Hmm, something doesn\'t seem right... deleting your movie from cart');
+    let append;
+    if (button === "Add") {
+        append = "";
+    }
+    else {
+        console.log("removing");
+        append = "/remove";
+    }
+    const res = await axios.post(`http://localhost:4000/api/cart${append}/${movie._id}`);
+    if (button === "Remove") {
+        window.location.reload(); //replace with proper code to fix deletion needing reload
     }
 }
 
