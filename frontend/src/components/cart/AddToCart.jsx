@@ -24,7 +24,7 @@ const AddToCart = (props) => {
     return (
         <>
             <div className="px-4 pb-4">
-                <button className="w-full bg-[#D62828] hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center" onClick={() => submit(movie, button)} >
+                <button className="w-fit bg-[#D62828] hover:cursor-pointer hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center" onClick={() => submit(movie, button)} >
                     {button === "Add" ? "Add to Cart" : "Remove"}
                 </button>
             </div >

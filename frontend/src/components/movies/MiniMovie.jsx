@@ -49,7 +49,7 @@ const MiniMovies = (props) => {
 
               <div className="mt-2 flex items-center">
                 <div className="flex items-center">
-                  <span className="ml-1 text-white">${movie.price || "?"}</span>
+                  <span className="ml-1 text-white">${movie.price.toFixed(2) || "?"}</span>
                 </div>
                 <span className="mx-2 text-gray-600">•</span>
                 <span className="text-gray-400 text-sm">
