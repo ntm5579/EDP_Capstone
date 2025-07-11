@@ -8,6 +8,36 @@ const cart = express.Router();
 const url = process.env.MONGO_DB_URL;
 const dbName = process.env.MONGO_DB;
 
+cart.get('/cart', async (req, res) => {
+    try {
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const collection = db.collection("Order");
+
+        const carts = await collection.find({ 'ordered': false }).toArray();
+        if (carts.length === 0) {
+            const cart = { //probably need to do something else
+                "movies": [],
+                "last_update": new Date(),
+                "ordered": false
+            }
+            res.json([]);
+        }
+
+        else {
+            const cart = carts[0]; //set this to a new cart
+            const movies = await db.collection("Movie").find({ '_id': { $in: cart.movies } }).toArray();
+            console.log(movies);
+            res.json(movies);
+        }
+
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).send('Hmm, something doesn\'t seem right... deleting your movie from cart');
+    }
+});
+
 cart.post('/cart/:movie_id', async (req, res) => {
 
     try {
@@ -20,7 +50,7 @@ cart.post('/cart/:movie_id', async (req, res) => {
         const carts = await collection.find({ 'ordered': false }).toArray();
         if (carts.length === 0) {
             const cart = {
-                "movies": [movie_id],
+                "movies": [new ObjectId(movie_id)],
                 "last_update": new Date(),
                 "ordered": false
             }
@@ -29,7 +59,7 @@ cart.post('/cart/:movie_id', async (req, res) => {
         }
         else {
             const cart = carts[0]; //set this to a new cart
-            cart.movies.push(movie_id);
+            cart.movies.push(new ObjectId(movie_id));
             await collection.updateOne(
                 { "_id": cart._id },
                 {

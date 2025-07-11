@@ -56,7 +56,7 @@ function Home() {
         {error && (
           <h3 className="mt-2 text-center text-xl font-medium text-black">{error}</h3>
         )}
-        <MiniMovies movies={FilteredMovies} />
+        <MiniMovies button="Add" movies={FilteredMovies} />
       </section>
     </>
   );
