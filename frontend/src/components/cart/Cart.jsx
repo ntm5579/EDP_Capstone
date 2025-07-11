@@ -10,9 +10,6 @@ const Cart = () => {
             try {
                 const res = await axios.get("http://localhost:4000/api/cart");
                 setData(res.data);
-                console.log(res.data);
-                console.log(data);
-                //map movie_ids and do api request for all
             } catch (error) {
                 console.log(error);
                 setData([]);
@@ -22,11 +19,41 @@ const Cart = () => {
         fetchCart();
     }, []);
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(data);
+
+        try {
+            const res = await axios.post(`http://localhost:4000/api/order`);
+            window.location.reload();
+
+            //console.log(data);
+            // Handle post submission logic (like showing a success message)
+        } catch (error) {
+            console.error("Error posting data", error);
+            // Handle errors here
+        }
+
+    };
 
     return (
         <>
-            <h1>Your Cart</h1>
-            <MiniMovies button="Remove" movies={data} />
+            <div>
+                <h1>Your Cart</h1>
+                <MiniMovies button="Remove" movies={data} />
+            </div>
+            <form onSubmit={handleSubmit}>
+                <label>Name</label>
+                <input name="name"></input>
+                <label>Email</label>
+                <input name="mail"></input>
+                <label>Address</label>
+                <input name="address"></input>
+                <label>Credit Card Number</label>
+                <input name="credit_card"></input>
+                <button type="submit">Order</button>
+            </form>
+
         </>
     );
 }
