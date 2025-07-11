@@ -2,6 +2,7 @@ import React, { useState, useEffect, use } from "react";
 import axios from "axios";
 import BackButton from "../other/BackButton";
 import Order from "./Order";
+import MiniMovies from "../movies/MiniMovie";
 
 function OrderHistory() {
   const [data, setData] = useState([]);
@@ -27,7 +28,7 @@ function OrderHistory() {
         </div>
         <div>View Orders</div>
 
-        {data.map((data) => <MiniMovie movies={data} />)
+        {data.map((data) => <MiniMovies movies={data} />)
         }
       </div>
     </>
