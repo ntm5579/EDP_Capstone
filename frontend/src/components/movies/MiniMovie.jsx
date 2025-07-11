@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import AddToCart from "../cart/AddToCart";
 
+//use state for movies in cart
+
 const MiniMovies = (props) => {
   const movies = props.movies;
   return (
