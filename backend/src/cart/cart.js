@@ -38,6 +38,29 @@ cart.get('/cart', async (req, res) => {
     }
 });
 
+cart.post('/order', async (req, res) => {
+    try {
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const collection = db.collection("Order");
+        console.log(`Ordering`);
+        const carts = await collection.find({ 'ordered': false }).toArray();
+
+        const cart = carts[0]; //set this to a new cart
+        await collection.updateOne(
+            { "_id": cart._id },
+            {
+                $set: { 'last_update': new Date(), "ordered": true },
+            }
+        );
+        res.status(201).send(`{"_id":"${cart._id}"}`);
+
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).send("Hmmm, something is wrong... No movies for you! ☹");
+    }
+});
+
 cart.post('/cart/:movie_id', async (req, res) => {
 
     try {
@@ -100,27 +123,4 @@ cart.post('/cart/remove/:movie_id', async (req, res) => {
     }
 });
 
-cart.post('/cart/order', async (req, res) => {
-    try {
-        const client = await MongoClient.connect(url);
-        const db = client.db(dbName);
-        const collection = db.collection("Order");
-        console.log(`Ordering`);
-        const carts = await collection.find({ 'ordered': false }).toArray();
-
-        const cart = carts[0]; //set this to a new cart
-        cart.movies.pop(cart.movies.indexOf(movie_id));
-        await collection.updateOne(
-            { "_id": cart._id },
-            {
-                $set: { 'last_update': new Date(), "ordered": true },
-            }
-        );
-        res.status(201).send(`{"_id":"${cart._id}"}`);
-
-    } catch (err) {
-        console.error("Error:", err);
-        res.status(500).send("Hmmm, something is wrong... No movies for you! ☹");
-    }
-});
 export default cart;
