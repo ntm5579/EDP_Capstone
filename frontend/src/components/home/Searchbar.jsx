@@ -11,8 +11,8 @@ function Searchbar({ genre, searchTerm, onSearch }) {
     <div className="w-fit mx-auto pb-20 pt-10">
       <input
         type="text"
-        className=" w-[700px] h-[100[px] text-lg placeholder-white text-white font-semibold bg-black p-4 pl-10 rounded-lg"
-        placeholder="Search by... Title, Genre, or Director"
+        className=" w-[700px] h-[50px] text-lg placeholder:text-black font-semibold bg-white border-2 border-black p-4 pl-10 rounded-lg"
+        placeholder="🔎︎ Search by... Title, Genre, or Director"
         value={searchTerm}
         onChange={(e) => onSearch(e.target.value)}
       />

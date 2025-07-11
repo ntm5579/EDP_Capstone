@@ -11,7 +11,7 @@ import OrderHistory from "./components/order/OrderHistory";
 function App() {
   return (
     <>
-      <div className="min-h-screen bg-[#F5f5f5] text-black">
+      <div className="min-h-screen text-black">
         <Router>
           <Header />
           <main className="mx-auto container">

@@ -120,18 +120,27 @@ const Movie = () => {
           </div>
         </div>
       </div>
-      <div className="w-[1200px] border mx-auto mt-5 bg-black text-white p-8 rounded-lg">
-        <h1 className="text-3xl font-bold text-white mb-7 w-fit ">Similar Movies to {data.title}</h1>
-        <div>
-          <MiniMovies movies={recommendedData} />
+      {recommendedData && recommendedData.length > 0 && (
+        <div className="w-[1200px] border mx-auto mt-5 bg-black text-white p-8 rounded-lg">
+          <h1 className="text-3xl font-bold text-white mb-7 w-fit ">
+            Similar Movies to {data.title}
+          </h1>
+          <div>
+            <MiniMovies movies={recommendedData.filter(movie => movie.title !== data.title)} />
+          </div>
         </div>
-      </div>
-      <div className="w-[1200px] border mx-auto mt-5 bg-black text-white p-8 rounded-lg">
-        <h1 className="text-3xl font-bold text-white mb-7 w-fit ">Movies by {data.director}</h1>
-        <div>
-          <MiniMovies movies={directorMovies} />
+      )}
+
+      {directorMovies && directorMovies.length > 0 && (
+        <div className="w-[1200px] border mx-auto mt-5 bg-black text-white p-8 rounded-lg">
+          <h1 className="text-3xl font-bold text-white mb-7 w-fit ">
+            Movies by {data.director}
+          </h1>
+          <div>
+            <MiniMovies movies={directorMovies.filter(movie => movie.title !== data.title)} />
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

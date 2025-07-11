@@ -7,7 +7,7 @@ from sklearn.neighbors import NearestNeighbors
 app = Flask(__name__)
 CORS(app)
 # Load and preprocess data
-df = pd.read_json("../backend/movies.json")
+df = pd.read_json("./movies.json")
 df['price'] = df['price'].astype(float)
 df['average_rating'] = df['average_rating'].astype(float)
 df['original_index'] = df.index
