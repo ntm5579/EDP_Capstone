@@ -25,16 +25,46 @@ cart.get('/cart/:id', async (req, res) => {
 );
 */
 
-cart.get('/cart/:id', async (req, res) => {
+cart.post('/cart/:movie_id', async (req, res) => {
+    /*
+    cart object {
+        _id:ObjectId
+        id: int
+        movies: [movie_ids]
+        last_update: date
+        ordered: boolean
+    }
+    */
     try {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
         const collection = db.collection("Order");
 
-        const { id } = req.params;
-        const movie_id = id;
+        const { movie_id } = req.params;
         console.log(`Adding movie with id ${movie_id}to cart:`);
+        const carts = await collection.find({ 'ordered': false }).toArray();
+        if (carts.length === 0) {
+            cart = {
+                "id": "test",
+                "movies": movie_id,
+                "last_update": new Date(),
+                "ordered": false
+            }
+            //insert database
+        }
+        else if (carts.length === 1) {
+            const cart = carts;
+            //insert movie_id to movies array
+            //update the last_update time
+        }
+        else {
+            //insert into cart movie array
+            //update the last_update time
+        }
+
+
         const result = await collection.insertOne(movie_id);
+        console.log(resulut.insertedId);
         res.status(201).send(`{"movie_id":"${result.insertedId}"}`);
     } catch (err) {
         console.error("Error:", err);
@@ -42,21 +72,3 @@ cart.get('/cart/:id', async (req, res) => {
     }
 });
 export default cart;
-
-/*
-app.post('/socks', async (req, res) => {
-    try {
-        const sock  = req.body;
-        const client = await MongoClient.connect(url);
-        const db = client.db(dbName);
-        const collection = db.collection(collectionName);
-        const result = await collection.insertOne(sock);
-        res.status(201).send(`{"_id":"${result.insertedId}"}`);
-    } catch (err) {
-        console.error('Error:', err);
-        res.status(500).send('Hmm, something doesn\'t smell right... Error adding sock');
-    }
-});
-
-*/
-
