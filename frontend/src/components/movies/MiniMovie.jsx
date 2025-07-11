@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import AddToCart from "../cart/AddToCart";
-
+// test
 function MiniMovies({ movies }) {
   return (
     <div className="grid grid-cols-4 gap-6">
