@@ -107,7 +107,7 @@ function Home() {
             {error}
           </h3>
         )}
-        <MiniMovies movies={currentMovies} />
+        <MiniMovies button="Add" movies={currentMovies} />
         <div className="flex justify-center font-bold space-x-2 mt-4">
           {currentPage > 1 && (
             <button
@@ -145,5 +145,5 @@ function Home() {
     </>
   );
 }
-
+//recommit
 export default Home;

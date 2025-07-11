@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import AddToCart from "../cart/AddToCart";
-// test
-function MiniMovies({ movies }) {
+
+//use state for movies in cart
+
+const MiniMovies = (props) => {
+  const movies = props.movies;
   return (
     <div className="grid grid-cols-4 gap-6">
       {movies.map((movie) => (
@@ -57,7 +60,7 @@ function MiniMovies({ movies }) {
               </div>
             </div>
           </Link>
-          <AddToCart data={movie} />
+          <AddToCart button={props.button} data={movie} />
         </div>
       ))}
     </div>
