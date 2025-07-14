@@ -25,13 +25,13 @@ function OrderHistory() {
         <div className="mb-4">
           <BackButton />
         </div>
-        <div>View Orders</div>
+        <div className="text-5xl font-black text-white">Your Orders</div>
 
 
         {data.map((cart, i) => (
-          <div key={i}>
-            <div>Order Id: {cart._id}</div>
-            <div>
+          <div className="my-4" key={i}>
+            <div className="text-xl font-semibold">Order Id: {cart._id}</div>
+            <div className="mt-3">
               {cart.matchedMovies && cart.matchedMovies.length > 0 ? (
                 <MiniMovies movies={cart.matchedMovies} />
               ) : (
