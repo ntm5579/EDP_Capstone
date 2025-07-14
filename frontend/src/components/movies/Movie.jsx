@@ -68,7 +68,7 @@ const Movie = () => {
         <div className="flex flex-row ">
           <div className="gap-6 w-[65%] flex flex-col">
             <h1 className="text-5xl font-black text-white">{data.title}</h1>
-            <h2 className="text-3xl font-bold text-white">{data.director}</h2>
+            <h2 className="text-3xl font-bold text-white">Director: {data.director}</h2>
             <div className="flex flex-wrap gap-4 text-lg">
               <div className="flex font-semibold items-center">
                 <span className="text-[#D62828] mr-2">Release Date:</span>
@@ -113,7 +113,7 @@ const Movie = () => {
             <div className="mt-3 flex">
               <div>
                 <Link
-                  href={data.trailer_link}
+                  to={data.trailer_link}
                   className="w-fit bg-[#D62828] hover:cursor-pointer hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center"
                   target="_blank"
                   rel="noopener noreferrer"
